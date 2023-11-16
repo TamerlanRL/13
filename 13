@@ -1,0 +1,29 @@
+#include <iostream>
+#include <iterator>
+#include <algorithm>
+#include <vector>
+using namespace std;
+class RemoveInRange
+{
+    char startRange;
+    char endRange;
+public:
+    RemoveInRange(char start, char end) : startRange(start), endRange(end) {}
+    bool operator()(char el)
+    {
+        return (el >= startRange && el <= endRange);
+    }
+};
+int main()
+{
+    vector<char> vec{'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'};
+    cout << "Original Vector: ";
+    copy(vec.begin(), vec.end(), ostream_iterator<char>(cout, " "));
+    cout << endl;
+    RemoveInRange removeFunctor('c', 'g');
+    auto it = remove_if(vec.begin(), vec.end(), removeFunctor);
+    vec.erase(it, vec.end());
+    cout << "Modified Vector: ";
+    copy(vec.begin(), vec.end(), ostream_iterator<char>(cout, " "));
+    cout << endl;
+}
